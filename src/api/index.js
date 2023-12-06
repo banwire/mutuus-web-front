@@ -1,0 +1,1 @@
+export {default as globalAPI} from './globalAPI';

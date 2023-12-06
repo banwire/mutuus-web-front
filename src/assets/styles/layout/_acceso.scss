@@ -1,0 +1,57 @@
+.login-acceso{
+    justify-content: space-around;
+    align-items: center;
+    
+    .fon-titulo{
+        font-family: $regular-mulish;
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 70px;
+    }
+    
+    .img-login-people {
+      width: 50%;
+      height: 50%;
+      position: fixed;
+      left: 0px;
+      bottom: 0px;
+    }
+    
+    .img-login-logo {
+      position: relative;
+      bottom: 140px;
+      left: 25px;
+    }
+    
+    .img-login-people-register {
+      width: 35%;
+      height: 42%;
+      position: fixed;
+      left: 70px;
+      bottom: 0px;
+    }
+    .contenedor-login{
+      background-color: white;
+      padding: 65px;
+      border-radius: 18px;
+    }
+    
+    .contenedor-register{
+      background-color: white;
+      padding:65px;
+      border-radius: 18px;
+    }
+    
+    .img-login-logo-register {
+      position: relative;
+      left: 35px;
+      bottom: 250px;
+    }
+    .line {
+      width: 150px; /* Ancho de la línea */
+      height: 2px; /* Grosor de la línea */
+      background-color: #E1E1E1;
+      border: 1px;
+    }
+      
+}
