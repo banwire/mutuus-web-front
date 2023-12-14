@@ -90,7 +90,7 @@ export const CodePage = () => {
   return (
     <CodeLayout title="Contratación en línea">
         <ProgressCircular open={loading} />
-      <ToastComponent {...toastInfo} handleClose={handleCloseToast} />
+        <ToastComponent {...toastInfo} handleClose={handleCloseToast} />
       <form onSubmit={onSubmit}>
       <Grid container className="code_validations" sx={{justifyContent:'center'}}>
         <Grid item xs={12} md={12} lg={12} textAlign='center'>
@@ -154,9 +154,7 @@ export const CodePage = () => {
           </Grid>
         </Grid>
         </Grid>
-        </form>
-    
-
-    </CodeLayout>
+     </form>
+  </CodeLayout>
   )
 }

@@ -115,7 +115,6 @@ export const InformationPage = () => {
          <ProgressCircular open={loading} />
       <ToastComponent {...toastInfo} handleClose={handleCloseToast} />
       <Grid container className='information-user' justifyContent='center'>
-          <br /><br />
         <Formik
           initialValues={InformationsForm}
           onSubmit={handleSubmit}
@@ -209,11 +208,10 @@ export const InformationPage = () => {
           </Grid>
         </Grid>
         <Grid container justifyContent='center' spacing={2} sx={{paddingTop:2}}>
-        
           <Grid item xs={ 10 } md={10} lg={12}>
           <label htmlFor="Fecha" >Fecha de nacimiento</label>
           <Grid className='form-fecha'>
-          <TextFieldDate 
+              <TextFieldDate 
                 placeholder='Día'
                 name="day"
                 type="text"
@@ -222,13 +220,13 @@ export const InformationPage = () => {
                 placeholder='Mes'
                 name="month"
                 type="text"
-              /> <TextFieldDate 
-              placeholder='Año'
-              name="year"
-              type="text"
-            />
-          </Grid>
-     
+              /> 
+              <TextFieldDate 
+                placeholder='Año'
+                name="year"
+                type="text"
+              />
+            </Grid>
           </Grid>
         </Grid>
         
@@ -249,7 +247,6 @@ export const InformationPage = () => {
   )
   
 }
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const top100Films = [
   { label: 'Masculino' },
   { label: 'Femenino' }
