@@ -1,14 +1,15 @@
+import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import { Link, useNavigate } from "react-router-dom"
 import { Grid } from '@mui/material';
-import Alert from '@mui/material/Alert';
-import Swal from 'sweetalert2';
 
+import {ProgressCircular} from "../../components/ProgressCircular"
+import {ToastComponent} from "../../components/ToastComponent"
 import {PrimaryButton, SecundaryButton} from "../../components/ButtonContent"
 import { MenuLayout } from "../../layout/MenuLayout"
 import { useAuthStore } from '../../hooks';
 import { registerValidationSchema } from '../../validations/registerValidations';
-import { MyTextInputRegister } from '../../components';
+import { MyTextInput, MyTextInputPassword } from '../../components';
 
 
 const RegisterForm = {
@@ -21,31 +22,63 @@ const RegisterForm = {
 }
 
 export const RegisterPage = () => {
-
   const handleInput = (e) => {
     e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo caracteres numéricos
   };
-
   const handleInputChange  = (e) => {
     e.target.value = e.target.value.replace(/[^A-Za-z]/g, ''); // Permite solo letras
   };
-
   const history = useNavigate();
-  
   const {startRegister, status, errorMessage} = useAuthStore();
+
+  const [loading, setLoading] = useState(false);
+  const [toastInfo, setToastInfo] = useState({
+    open: false,
+    message: '',
+    severity: '',
+    duration: 3000,
+  });
+  const handleCloseToast = () => {
+    setToastInfo({
+      ...toastInfo,
+      open: false,
+    });
+  };
+
 
   return (
     <MenuLayout title="Ingresa tus datos">
+       <ProgressCircular open={loading} />
+      <ToastComponent {...toastInfo} handleClose={handleCloseToast} />
         <Formik
           initialValues={RegisterForm}
           onSubmit={ (values) => {
+            const durations = 4000;
+            setLoading(true);
             let rasult = {
               'customer':values
             }
             startRegister(rasult).then(succ=>{
-              if(succ.ok === 'exito'){
-                history('/code');
-              }
+              setTimeout(() => {
+                setLoading(false);
+                if(succ.ok === 'exito'){
+                  history('/code');
+                } else {
+                  setToastInfo({
+                    open: true,
+                    message: succ.message,
+                    severity: 'error',
+                    duration: durations,
+                  });
+              
+                  setTimeout(() => {
+                    setToastInfo({
+                      ...toastInfo,
+                      open: false,
+                    });
+                  }, durations);
+                }
+              }, durations);
             })
           }}
           validationSchema={registerValidationSchema}
@@ -54,31 +87,34 @@ export const RegisterPage = () => {
       <Form className='register-acceso'>
         <Grid container spacing={ 2 }>
           <Grid item xs={ 10 } md={9} lg={4}>
-          <MyTextInputRegister 
+          <MyTextInput 
                 label="Nombre"
                 name="first_name"
                 type="text"
                 placeholder="Ingresa tus nombres aquí"
+                onInput={handleInputChange}
               />
           </Grid> 
           <Grid item xs={ 10 } md={9} lg={4}>
-          <MyTextInputRegister 
+          <MyTextInput 
                 label="Apellido Paterno"
                 name="last_name"
                 type="text"
                 placeholder="Ingresa tus apellidos aquí"
+                onInput={handleInputChange}
               />
           </Grid> 
           <Grid item xs={ 10 } md={9} lg={4}>
-          <MyTextInputRegister 
+          <MyTextInput 
                 label="Apellido Materno"
                 name="middle_name"
                 type="text"
                 placeholder="Ingresa tus apellidos aquí"
+                onInput={handleInputChange}
               />
           </Grid> 
           <Grid item xs={ 10 } md={9} lg={12}>
-          <MyTextInputRegister 
+          <MyTextInput 
                 label="Email"
                 name="email"
                 type="email"
@@ -86,18 +122,19 @@ export const RegisterPage = () => {
               />
           </Grid>
           <Grid item xs={ 10 } md={9} lg={12}>
-          <MyTextInputRegister 
+          <MyTextInput 
                 label="Teléfono o celular"
                 name="phone_number"
                 type="text"
                 placeholder="Ingresa tu número de celular o teléfono"
+                onInput={handleInput}
+                inputProps={{ maxLength: 10, inputMode: 'numeric' }}
               />
           </Grid>
           <Grid item xs={ 10 } md={9} lg={12}>
-          <MyTextInputRegister 
+          <MyTextInputPassword 
                 label="Contraseña"
                 name="password"
-                type="password"
                 placeholder="Ingresa una contraseña aquí"
               />
           </Grid>
@@ -118,6 +155,7 @@ export const RegisterPage = () => {
         </Form>
       )}
     </Formik>
+    
     </MenuLayout>
   )
 }

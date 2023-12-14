@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom"
 import { Grid } from "@mui/material"
-import { PolizasLayout } from "../../layout/PolizasLayout"
+import { CodeLayout} from "../../layout/CodeLayout"
 import {PrimaryButtonCode, SecundaryButtonCode} from "../../components/ButtonContent"
 import {CssTextField} from "../../components/TextFieldContent"
+import {ProgressCircular} from "../../components/ProgressCircular"
+import {ToastComponent} from "../../components/ToastComponent"
 import { useAuthStore, useForm } from '../../hooks';
-
-import Swal from 'sweetalert2';
 
 const CodeForm = {
   code1:'',
@@ -28,6 +28,19 @@ export const CodePage = () => {
   const history = useNavigate();
   const {startCode, user, code, status, errorMessage} = useAuthStore();
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [toastInfo, setToastInfo] = useState({
+    open: false,
+    message: '',
+    severity: '',
+    duration: 3000,
+  });
+  const handleCloseToast = () => {
+    setToastInfo({
+      ...toastInfo,
+      open: false,
+    });
+  };
 
   const { formState,code1, code2,code3, code4, onInputChange,
     isFormValid, code1Valid, code2Valid, code3Valid, code4Valid} = useForm(CodeForm, formValidations)
@@ -45,24 +58,39 @@ export const CodePage = () => {
       }
     } 
     if ( !isFormValid ) return;
+    const durations = 4000;
+    setLoading(true);
     startCode(result).then(succ=>{
-      Swal.fire({
-        title: "¡Exito!",
-        text: "Se validó el código correctamente",
-        icon: "success",
-        confirmButtonText: 'Aceptar'
-      }).then(succ => {
-        if (succ.isConfirmed) {
-          // history('/login');
-        }
-      })
+
+      setTimeout(() => {
+        setLoading(false);
+        if(succ.ok === 'exito'){
+          setToastInfo({
+            open: true,
+            message: 'Se validó el código correctamente',
+            severity: 'success',
+            duration: durations,
+          });
+      
+          setTimeout(() => {
+            setToastInfo({
+              ...toastInfo,
+              open: false,
+            });
+            history('/login');
+          }, durations);
+         
+        } 
+      }, durations);
+    
     })
   }
 
 
   return (
-    <PolizasLayout title="Contratación en línea">
-     
+    <CodeLayout title="Contratación en línea">
+        <ProgressCircular open={loading} />
+      <ToastComponent {...toastInfo} handleClose={handleCloseToast} />
       <form onSubmit={onSubmit}>
       <Grid container className="code_validations" sx={{justifyContent:'center'}}>
         <Grid item xs={12} md={12} lg={12} textAlign='center'>
@@ -119,7 +147,7 @@ export const CodePage = () => {
               Reenviar Código
             </SecundaryButtonCode>
           </Grid>
-          <Grid item s={ 12 } sm={ 6 }  md={6} lg={6} textAlign='center'>
+          <Grid item xs={ 12 } sm={ 6 }  md={6} lg={6} textAlign='center'>
             <PrimaryButtonCode type='submit' variant='contained'>
               Continuar
             </PrimaryButtonCode>
@@ -129,6 +157,6 @@ export const CodePage = () => {
         </form>
     
 
-    </PolizasLayout>
+    </CodeLayout>
   )
 }

@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: app
+    image: app:v0.0.3-${ENV}
+    build:
+      context: .
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.app.rule=Host(${HOST})
+      - traefik.http.services.app-service.loadbalancer.server.port=80
+    networks:
+      - traefik_test
+
+networks:
+  traefik_test:
+    external: true

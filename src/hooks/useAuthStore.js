@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import API from "../api/globalAPI";
 import { checkingCredentials, login, logout, codeOuth, codeError, alturas, pesos, informacion } from "../store";
-import { Code } from "@mui/icons-material";
 
 export const useAuthStore = () =>{
 
@@ -20,16 +19,16 @@ export const useAuthStore = () =>{
             getInformation(data.login.access_token);
             WeightList(data.login.access_token)
             HeightList(data.login.access_token)
-            dispatch(login({name: data.message, uid: data.name}))
+            dispatch(login({token: data.login.access_token}))
             return {
                 ok: 'exito',
                 message: 'Exito usuario',
             }
         } catch(error){
-            dispatch(logout('Implementacion pendiente.'))
+            dispatch(logout('Error al iniciar sesión.'))
             return {
                 ok: 'error',
-                message: error.message,
+                message: '¡Error al iniciar sesión!',
             }
           
         }
@@ -52,7 +51,11 @@ export const useAuthStore = () =>{
                 message: data.register_step_1.customer_email,
             }
         } catch(error){
-            dispatch(logout('Ha ocurrido un error.'))
+            dispatch(logout('¡Ha ocurrido un error al registrarse!'))
+            return {
+                ok: 'error',
+                message: '¡Ha ocurrido un error al registrarse!',
+            }
         }
 
 
@@ -86,7 +89,10 @@ export const useAuthStore = () =>{
                     Authorization: `Bearer ${succ}`
                 }
             })
-            let info = data.customer[0].person_info.first_name;
+            let info = {
+                name:data.customer[0].person_info.first_name,
+                idU: data.customer[0].id
+            }
           
             dispatch(informacion({information: info}))
         } catch(error){
@@ -106,7 +112,7 @@ export const useAuthStore = () =>{
                     Authorization: `Bearer ${succ}`
                 }
             })
-            dispatch(pesos({pesos: data.wight}))
+            dispatch(pesos({pesos: data.weight}))
         } catch(error){
             console.log(error);
             // dispatch(codeError('Código incorrector favor de Verificar.'))
@@ -134,8 +140,10 @@ export const useAuthStore = () =>{
     }
 
     const registrationInfo = async(succ ) =>{
+        console.log('info: ',information);
         try{
-            const {data} = await API.put('/customer/registration-info/'+user.uid,succ,
+            
+            const {data} = await API.put('/customer/registration-info/'+information.information.idU,succ,
             {
                 headers:{
                     'x-hasura-admin-secret': 'EEF66E22-320D-4617-B33C-DAD4A55C84B6',
@@ -144,14 +152,16 @@ export const useAuthStore = () =>{
             })
             dispatch(alturas({informacionPersonal: data}))
             return {
-                ok:true,
+                ok:'exito',
                 respuesta: data
             }
         } catch(error){
             console.log(error);
+            let {data} = error.response
+            console.log('data: ', data);
             return {
-                ok:false,
-                respuesta: ''
+                ok:'error',
+                respuesta: data.error
             }
             // dispatch(codeError('Código incorrector favor de Verificar.'))
         }

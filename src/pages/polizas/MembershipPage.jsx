@@ -51,7 +51,7 @@ const rows = [
 ];
 export const MembershiPage = () => {
   return (
-    <PolizasLayout title="Elección de membresía.">
+    <PolizasLayout title="Por favor ingresa la siguiente información">
       <Grid container  spacing={1}>
         <Grid item xs={ 12 } md={4} lg={3}>
           <p>Clave del agente: </p>

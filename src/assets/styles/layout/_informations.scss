@@ -1,9 +1,39 @@
 .general-informations{
-    justify-content: center !important;
-    align-items: center;
-    
-    .image-intro{
-        position: relative;
-        padding-top: 80px;
-    }
+    .contenedor-login{
+        background-color: #003896;
+        padding-top: 10px;
+        padding-left: 10%;
+        .image-cruz{
+            width: 0%;
+        }
+        p{
+            font-family: $regular-m;
+            color: #E0E0E0;
+            font-size: 15px;
+            font-weight: 450;
+            line-height: 25px;
+        }
+      }
+      
 }
+@include respond-to('tiny') {
+    .general-informations{
+        .contenedor-login{
+            background-color: #003896;
+            padding-top: 70px;
+            padding-left: 25px;
+    
+            .image-cruz{
+                width: 90%;
+            }
+            p{
+            font-family: $regular-m;
+            color: #E0E0E0;
+            font-size: 25px;
+            font-weight: 700;
+            line-height: 40px;
+        }
+          }
+          
+    }
+  }

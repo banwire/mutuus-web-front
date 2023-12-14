@@ -7,7 +7,7 @@ export const LoginButton = styled(Button)({
     lineHeight: 1.5,
     backgroundColor: '#9CD41C',
     color: '#fff',
-    fontFamily: 'Mulish',
+    fontFamily: 'Montserrat',
     borderRadius:30,
     width:140,
     height:30,
@@ -33,7 +33,7 @@ export const LoginButton = styled(Button)({
     lineHeight: 1.5,
     backgroundColor: '#9CD41C',
     color: '#fff',
-    fontFamily: 'Mulish',
+    fontFamily: 'Montserrat',
     borderRadius:30,
     height:30,
   
@@ -56,7 +56,7 @@ export const LoginButton = styled(Button)({
   export const PrimaryButton = styled(Button)({
     textTransform: 'none',
     fontFamily: 'Montserrat',
-    backgroundColor: '#C0C0C0',
+    backgroundColor: '#EFEFEF',
     width:150,
     color: '#003896',
     fontSize: 14,

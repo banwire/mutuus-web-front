@@ -1,23 +1,14 @@
-import { CircularProgress, Grid } from '@mui/material';
+import React from 'react';
+import { Backdrop, CircularProgress } from '@mui/material';
 
 
-export const ProgressCircular = () => {
+export const ProgressCircular = ({ open }) => {
   return (
-    <Grid
-      container
-      spacing={ 0 }
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      sx={{ minHeight: '100vh', backgroundColor: 'primary.main', padding: 4 }}
+    <Backdrop
+      sx={{ color: '#183b91', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      open={open}
     >
-
-        <Grid container
-            direction='row'
-            justifyContent='center'
-            >
-            <CircularProgress color='warning' />
-        </Grid>
-    </Grid>
+      <CircularProgress color="inherit" />
+    </Backdrop>
   )
 }

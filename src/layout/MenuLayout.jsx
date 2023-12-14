@@ -12,9 +12,6 @@ export const MenuLayout = ({ children, title = '', }) => {
       className='login-acceso fondoColor'
       sx={{ color: 'primary.main', minHeight: '100vh'}}
     >
-     
-     
-
       {title === "Iniciar Sesión" || title ==="Cambio de contraseña"
         ? <Grid sx={{ width: { xs:350, sm: 380, md:390, lg:550}
       }}>
@@ -29,8 +26,6 @@ export const MenuLayout = ({ children, title = '', }) => {
               <Grid>
               <p style={{fontSize:40} }>El seguro que buscas, </p>
               </Grid>
-              <br />
-              <br />
               <Grid >
                 <p style={{fontSize:40} }><strong style={{color:'#9CD41C'} }>
               NO</strong>  es un seguro.</p>
@@ -49,7 +44,7 @@ export const MenuLayout = ({ children, title = '', }) => {
               { children }
             </Grid>
         
-        :  <Grid sx={{ width: { xs:350, sm: 380, md:390, lg:580}}} className='contenedor-register'>
+        :  <Grid sx={{ width: { xs:350, sm: 380, md:500, lg:580}}} className='contenedor-register'>
         <Typography className='fon-titulo'>{ title }</Typography>
         <br />
         { children }

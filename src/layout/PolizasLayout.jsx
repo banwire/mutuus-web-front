@@ -1,26 +1,26 @@
 import {  Grid } from '@mui/material';
-import Logo1 from '../assets/img/mutuus-1/Logo1.png';
+import Logo1 from '../assets/img/mutuus-1/logo-mu.png';
+import logoCruz from '../assets/img/mutuus-1/cruz-logo.png'
 import { Footer } from '../components';
 
-export const PolizasLayout = ({ children, title = ''   }) => {
+export const PolizasLayout = ({ children, title   }) => {
   return (
     <Grid
-     container
-      spacing={ 0 }
-      direction="column"
-      className='general-informations fondoColor2'
-      sx={{ color: 'primary.main'}}
+      container
+      className='general-informations fondoInformation'
+      sx={{ minHeight: '100vh' }}
     >
-    
-    <Grid container sx={{justifyContent:'center'}} className='image-intro'>
-      <img src={Logo1} alt="Mutuus" width="230" height="85" align='center'/>
+      <Grid item xs={ 12 } sm={6} md={6} lg={4} className='contenedor-login'>
+        <img src={Logo1} alt="Mutuus"/>
+        <br /><br />
+        <p> { title }</p>
+        <br />
+        <img src={logoCruz} alt="MutuusCruz" className='image-cruz'/>
       </Grid>
-      <Grid container sx={{justifyContent:'center', paddingTop:5}}>
-        <Grid item xs={ 10 } md={9} lg={9}>
+      <Grid item xs={ 12 }sm={6}  md={6} lg={8} sx={{paddingTop:20}}>
+        <br /><br />
         { children }
-        </Grid>
       </Grid>
-      <Footer/>
     </Grid>
   )
 }

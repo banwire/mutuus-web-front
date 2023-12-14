@@ -1,0 +1,35 @@
+.information-user{
+    font-family: $bold;
+    font-size: 12px;
+    color: black;
+    font-weight: 550;
+    line-height: 18px;
+
+    // .box-info {
+    //     background-color: #FFFFFF;
+    //     border-radius: 15px;
+    //     padding: 50px;
+    // }
+
+    .title-info{
+        p{
+            font-family: $regular-m;
+            font-size: 18px;
+            color: #11142D;
+            font-weight: 700;
+            line-height: 18px;
+        }
+    }
+
+    .form-fecha{
+        display: flex;
+        // justify-content:center !important;
+    }
+    span {
+        font-family: $regular-m;
+        font-size: 9px;
+        color: red;
+    }
+  
+   
+}

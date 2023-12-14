@@ -1,17 +1,16 @@
-.login-acceso{
-    font-family: $regular-mulish;
+.login-acceso-p{
+    font-family: $regular-m;
     font-size: 12px;
     color: black;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 18px;
     align-items: center;
 
-    .form-login {
-        span {
-            font-family: $regular-mulish;
-            font-size: 9px;
-            color: red;
-        }
+
+    span {
+        font-family: $regular-m;
+        font-size: 9px;
+        color: red;
+        font-weight: 400;
     }
-   
 }
