@@ -17,8 +17,7 @@ export const PolizasLayout = ({ children, title   }) => {
         <br />
         <img src={logoCruz} alt="MutuusCruz" className='image-cruz'/>
       </Grid>
-      <Grid item xs={ 12 }sm={6}  md={6} lg={8} sx={{paddingTop:10}}>
-        <br /><br />
+      <Grid item xs={ 12 }sm={6}  md={6} lg={8}>
         { children }
       </Grid>
     </Grid>

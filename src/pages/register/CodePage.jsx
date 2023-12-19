@@ -7,6 +7,7 @@ import {CssTextField} from "../../components/TextFieldContent"
 import {ProgressCircular} from "../../components/ProgressCircular"
 import {ToastComponent} from "../../components/ToastComponent"
 import { useAuthStore, useForm } from '../../hooks';
+import { useSelector } from "react-redux"
 
 const CodeForm = {
   code1:'',
@@ -22,11 +23,12 @@ const formValidations ={
 }
 
 export const CodePage = () => {
+  const {email, errorMessage, code, altura, peso, information} = useSelector((state) => state.counter);
   const handleInput = (e) => {
     e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo caracteres numéricos
   };
   const history = useNavigate();
-  const {startCode, user, code, status, errorMessage} = useAuthStore();
+  const {startCode} = useAuthStore();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [toastInfo, setToastInfo] = useState({
@@ -54,13 +56,14 @@ export const CodePage = () => {
     const result = {
       'customer_code':{
         code: '89238936',
-        customer_email: user.uid
+        customer_email: email.emailValid
       }
     } 
     if ( !isFormValid ) return;
     const durations = 4000;
     setLoading(true);
-    startCode(result).then(succ=>{
+    startCode(result)
+    .then(succ=>{
 
       setTimeout(() => {
         setLoading(false);

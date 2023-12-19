@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import { Link, useNavigate } from "react-router-dom"
 import { Grid } from '@mui/material';
-
+import { useDispatch, useSelector } from "react-redux"
 import {ProgressCircular} from "../../components/ProgressCircular"
 import {ToastComponent} from "../../components/ToastComponent"
 import {PrimaryButton, SecundaryButton} from "../../components/ButtonContent"
@@ -22,6 +22,7 @@ const RegisterForm = {
 }
 
 export const RegisterPage = () => {
+  const dispatch = useDispatch();
   const handleInput = (e) => {
     e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo caracteres numéricos
   };
@@ -58,7 +59,8 @@ export const RegisterPage = () => {
             let rasult = {
               'customer':values
             }
-            startRegister(rasult).then(succ=>{
+
+             startRegister(rasult).then(succ=>{
               setTimeout(() => {
                 setLoading(false);
                 if(succ.ok === 'exito'){
@@ -80,6 +82,7 @@ export const RegisterPage = () => {
                 }
               }, durations);
             })
+          
           }}
           validationSchema={registerValidationSchema}
         >

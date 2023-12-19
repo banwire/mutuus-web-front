@@ -1,5 +1,6 @@
 import { useState, useEffect  } from 'react';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
+import { useSelector } from "react-redux"
 import { Grid } from "@mui/material"
 import Autocomplete from '@mui/material/Autocomplete';
 import { PolizasLayout } from "../../layout/PolizasLayout"
@@ -24,25 +25,27 @@ const InformationsForm = {
  
 export const InformationPage = () => {
   const history = useNavigate();
-  const {registrationInfo, information, altura, peso} = useAuthStore();
+  const {registrationInfo} = useAuthStore();
+  const { altura, peso, information} = useSelector((state) => state.counter);
   let orderby = [];
   let orderbyPeso = [];
-  // useEffect(() => {
-  //   altura.altura.forEach(item =>{
-  //     orderby.push(item.value.toString())
-  //   })
-  //   peso.pesos.forEach(item =>{
-  //     orderbyPeso.push(item.value.toString())
-  //   })
-  // }, []);
+  useEffect(() => {
+    altura.altura.forEach(item =>{
+      orderby.push(item.value.toString())
+    })
+    peso.pesos.forEach(item =>{
+      orderbyPeso.push(item.value.toString())
+    })
+    console.log(information);
+  }, []);
 
   const defaultProps = {
-    options: alturas,
+    options: orderby,
     getOptionLabel: (option) => option,
   };
 
   const defaultPropsPeso = {
-    options: pesos,
+    options: orderbyPeso,
     getOptionLabel: (option) => option,
   };
   const [loading, setLoading] = useState(false);
@@ -81,7 +84,7 @@ export const InformationPage = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         setLoading(true);
-        registrationInfo(dataResult).then(succ=>{
+        registrationInfo(dataResult, information.information.id).then(succ=>{
           setTimeout(() => {
             setLoading(false);
             if(succ.ok === 'exito'){

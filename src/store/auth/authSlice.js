@@ -5,6 +5,7 @@ export const authSlice = createSlice ({
     initialState: {
         status: 'checking',
         user:{},
+        email:{},
         code:{},
         altura:{},
         peso:{},
@@ -22,6 +23,11 @@ export const authSlice = createSlice ({
             state.user= payload,
             state.errorMessage= undefined
         },
+        registro:(state, {payload}) =>{
+         state.status ='authenticatedRegister',
+         state.email= payload,
+         state.errorMessage= undefined
+     },
 
         logout:(state, {payload}) =>{
            state.status ='Notauthenticated',
@@ -56,4 +62,4 @@ export const authSlice = createSlice ({
     }
 })
 
-export const {login, logout, checkingCredentials, codeOuth, codeError, alturas, pesos, informacion} = authSlice.actions;
+export const {login, logout, checkingCredentials, codeOuth, codeError, alturas, pesos, informacion, registro} = authSlice.actions;

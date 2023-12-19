@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
 import API from "../api/globalAPI";
-import { checkingCredentials, login, logout, codeOuth, codeError, alturas, pesos, informacion } from "../store";
-
+import { authSlice } from "../store/auth/authSlice";
+import { usePaymentStore } from './usePaymentStore';
+import { checkingCredentials, login, logout, codeOuth, codeError, alturas, pesos, informacion, registro } from "../store/auth/authSlice";
 export const useAuthStore = () =>{
-
-    const {status, user, errorMessage, code, altura, peso, information} = useSelector(state => state.auth);
+    // const  { checkingCredentials, login, logout, codeOuth, codeError, alturas, pesos, informacion } = authSlice.actions;
+    const {user} = useSelector(state => state.counter);
+    const {getProducts} = usePaymentStore();
     const dispatch = useDispatch()
 
     const startLogin = async(succ) =>{
@@ -45,7 +47,7 @@ export const useAuthStore = () =>{
                     'x-hasura-admin-secret': 'EEF66E22-320D-4617-B33C-DAD4A55C84B6'
                 }
             })
-            dispatch(login({uid: data.register_step_1.customer_email}))
+            dispatch(registro({emailValid: data.register_step_1.customer_email}))
             return {
                 ok: 'exito',
                 message: data.register_step_1.customer_email,
@@ -94,7 +96,7 @@ export const useAuthStore = () =>{
                 idU: data.customer[0].id
             }
           
-            dispatch(informacion({information: info}))
+            dispatch(informacion({information: data.customer[0]}))
         } catch(error){
             console.log(error);
             // dispatch(codeError('Código incorrector favor de Verificar.'))
@@ -139,18 +141,18 @@ export const useAuthStore = () =>{
 
     }
 
-    const registrationInfo = async(succ ) =>{
-        console.log('info: ',information);
+    const registrationInfo = async(succ, uid ) =>{
+        console.log('info: ',user.token);
         try{
             
-            const {data} = await API.put('/customer/registration-info/'+information.information.idU,succ,
+            const {data} = await API.put('/customer/registration-info/'+uid,succ,
             {
                 headers:{
                     'x-hasura-admin-secret': 'EEF66E22-320D-4617-B33C-DAD4A55C84B6',
-                    Authorization: `Bearer ${code.token}`
+                    Authorization: `Bearer ${user.token}`
                 }
             })
-            dispatch(alturas({informacionPersonal: data}))
+            getProducts()
             return {
                 ok:'exito',
                 respuesta: data
@@ -173,13 +175,13 @@ export const useAuthStore = () =>{
 
     return {
         //* Propiedades...
-        status,
-        user, 
-        errorMessage,
-        code,
-        altura,
-        peso,
-        information,
+        // status,
+        // user, 
+        // errorMessage,
+        // code,
+        // altura,
+        // peso,
+        // information,
 
 
         //* Métodos.....

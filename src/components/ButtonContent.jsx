@@ -102,6 +102,32 @@ export const LoginButton = styled(Button)({
     },
   });
 
+  export const PagosButton = styled(Button)({
+    textTransform: 'none',
+    fontFamily: 'Montserrat',
+    fontSize: 14,
+    backgroundColor: '#9CD41C',
+    width:180,
+    height:100,
+    color: '#FFFFFF',
+    lineHeight: 1.5,
+    borderRadius:18,
+    '&:hover': {
+      backgroundColor: '#444343',
+      borderColor: '#0062cc',
+      boxShadow: 'none',
+      color:'#FFFFFF'
+    },
+    '&:active': {
+      boxShadow: 'none',
+      backgroundColor: '#0062cc',
+      borderColor: '#005cbf',
+    },
+    '&:focus': {
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+    },
+  });
+
   export const PrimaryButtonCode = styled(Button)({
     textTransform: 'none',
     fontFamily: 'Montserrat',
