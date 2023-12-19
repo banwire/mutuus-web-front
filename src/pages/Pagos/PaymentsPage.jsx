@@ -59,26 +59,6 @@ export const PaymentsPage = () => {
       open: false,
     });
   };
-
-  const [nameValue, setnameValue] = useState('');
-  const handleChangeName = (event) => {  
-    setnameValue(event.target.value);
-  };
-
-  const [numeroValue, setnumeroValue] = useState('');
-  const handleChangeNum = (event) => {  
-    setnumeroValue(event.target.value);
-  };
-
-  const [mesValue, setmesValue] = useState('');
-  const handleChangeMes = (event) => {  
-    setmesValue(event.target.value);
-  };
-
-  const [yearValue, setyearValue] = useState('');
-  const handleChangeYear = (event) => {  
-    setyearValue(event.target.value);
-  };
   
   const handleSubmit = (values) => {
     setLoading(true);
@@ -96,7 +76,7 @@ export const PaymentsPage = () => {
         <Formik
           initialValues={membershiForm}
           onSubmit={handleSubmit}
-          // validationSchema={creditValidationSchema}
+          validationSchema={creditValidationSchema}
         >
         { ({ values,handleSubmit, handleChange, handleBlur, errors, touched }) => (
         <Form onSubmit={handleSubmit} autocomplete="off">
@@ -110,14 +90,14 @@ export const PaymentsPage = () => {
               <Grid item xs={ 10 } md={10} lg={6} className='img-card'>
               <img src={imgMaster} alt="Credit" className='master-card'/>
               <img src={imgCard} alt="Credit"/>
-              <Grid className='text-name'>
-                <p>{nameValue}</p>
+              <Grid >
+                <p>{values.name}</p>
               </Grid>
-              <Grid className='text-numero'>
-                <p>{numeroValue.match(/.{1,4}/g)?.join(' ')}</p>
+              <Grid >
+                <p>{values.number.match(/.{1,4}/g)?.join(' ')}</p>
               </Grid>
-              <Grid className='text-year'>
-                <p>{mesValue}/{yearValue}</p>
+              <Grid >
+                <p>{values.year}/{values.month}</p>
               </Grid>
               </Grid> 
               
@@ -129,9 +109,9 @@ export const PaymentsPage = () => {
                   placeholder='Número de tarjeta'
                   name="number"
                   type="text"
-                  onInput={handleInput}
-                  value={numeroValue}
-                  onChange={handleChangeNum}
+                  onInput={handleChange('number')}
+                  value={values.number}
+                 
                 inputProps={{ maxLength: 16, inputMode: 'numeric' }}
                 />
               </Grid> 
@@ -142,8 +122,8 @@ export const PaymentsPage = () => {
                   placeholder='Nombre de la tarjeta'
                   name="name"
                   type="text"
-                  value={nameValue}
-        onChange={handleChangeName}
+                  value={values.name}
+    
                   onInput={handleInputChange}
                 />
              </Grid> 
@@ -158,8 +138,8 @@ export const PaymentsPage = () => {
                       placeholder='Mes'
                       name="month"
                       type="text"
-                      value={mesValue}
-                      onChange={handleChangeMes}
+                      value={values.month}
+                    
                       onInput={handleInput}
                 inputProps={{ maxLength: 2, inputMode: 'numeric' }}
                     />
@@ -169,8 +149,8 @@ export const PaymentsPage = () => {
                   placeholder='Año'
                   name="year"
                   type="text"
-                  value={yearValue}
-                  onChange={handleChangeYear}
+                  value={values.year}
+             
                   onInput={handleInput}
                 inputProps={{ maxLength: 2, inputMode: 'numeric' }}
                 /> 
@@ -180,6 +160,7 @@ export const PaymentsPage = () => {
                       placeholder='CVV'
                       name="cvv"
                       type="text"
+                      value={values.cvv}
                       onInput={handleInput}
                 inputProps={{ maxLength: 3, inputMode: 'numeric' }}
                     />
