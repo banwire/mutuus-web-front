@@ -76,12 +76,9 @@ export const MembershiPage = () => {
  
 }
   return (
-    <PolizasLayout title="Por favor ingresa la siguiente información">
+    <PolizasLayout title="Por favor ingresa la siguiente información"  stepv={2}>
        <ProgressCircular open={loading} />
-        <Grid container justifyContent='center' marginTop={2}>
-        <PaymentSteps step={2}></PaymentSteps>
-        </Grid>
-       <br />
+       
         <Formik
           initialValues={membershiForm}
           onSubmit={handleSubmit}

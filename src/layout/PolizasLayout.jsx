@@ -1,9 +1,9 @@
 import {  Grid } from '@mui/material';
 import Logo1 from '../assets/img/mutuus-1/logo-mu.png';
 import logoCruz from '../assets/img/mutuus-1/cruz-logo.png'
-import { Footer } from '../components';
+import { Footer, PaymentSteps } from '../components';
 
-export const PolizasLayout = ({ children, title   }) => {
+export const PolizasLayout = ({ children, title, stepv   }) => {
   return (
     <Grid
       container
@@ -18,7 +18,15 @@ export const PolizasLayout = ({ children, title   }) => {
         <img src={logoCruz} alt="MutuusCruz" className='image-cruz'/>
       </Grid>
       <Grid item xs={ 12 }sm={6}  md={6} lg={8}>
-        { children }
+        <Grid container justifyContent='center' sx={{marginTop:2}}>
+        <PaymentSteps step={stepv}></PaymentSteps>
+        </Grid>
+        <Grid container justifyContent='center' sx={{marginTop:4}}>
+        <Grid item sx={{ width: { xs:360, sm: 380, md:500, lg:760}}} className='contenedor-full'>
+          { children }
+        </Grid>
+        </Grid>
+       
       </Grid>
     </Grid>
   )

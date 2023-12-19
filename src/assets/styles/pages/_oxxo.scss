@@ -1,0 +1,35 @@
+.payments-oxxo{
+    font-family: $regular-m;
+    font-size: 12px;
+    color: black;
+    font-weight: 550;
+    line-height: 18px;
+
+    .title-componente{
+        font-size: 20px;
+        color: #11142D;
+        font-weight: 700;
+        line-height: 15px;
+    }
+    .contenedor-button{
+        width: 150px;
+        background-color: rgb(83, 9, 9);
+        padding: 20px;
+        border-radius: 70px;
+
+        p{
+            font-family: $regular-m;
+            font-size: 20px;
+            color: #FFFEFE;
+            font-weight: 700;
+            line-height: 18px;
+        }
+      }
+    span {
+        font-family: $regular-m;
+        font-size: 9px;
+        color: red;
+    }
+  
+   
+}

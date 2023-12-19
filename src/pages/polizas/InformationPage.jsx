@@ -115,10 +115,8 @@ export const InformationPage = () => {
   
 
   return (
-    <PolizasLayout title="Por favor ingresa la siguiente información">
-         <Grid container justifyContent='center' marginTop={2}>
-        <PaymentSteps step={1}></PaymentSteps>
-        </Grid>
+    <PolizasLayout title="Por favor ingresa la siguiente información"  stepv={1}>
+      
          <ProgressCircular open={loading} />
       <ToastComponent {...toastInfo} handleClose={handleCloseToast} />
       <Grid container className='information-user' justifyContent='center'>

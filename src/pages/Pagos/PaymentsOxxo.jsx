@@ -34,7 +34,7 @@ const membershiForm = {
 }
 
 let result = ''
-export const PaymentsPage = () => {
+export const PaymentsOxxo = () => {
   const handleInput = (e) => {
     e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo caracteres numéricos
   };
@@ -91,7 +91,7 @@ export const PaymentsPage = () => {
  
 }
   return (
-    <PolizasLayout title="Ingresa los datos de tu tarjeta de crédito o débito"  stepv={3}>
+    <PolizasLayout title="Realiza tu pago mediante Oxxo y tiendas de conveniencia" stepv={3}>
        <ProgressCircular open={loading} />
         <Formik
           initialValues={membershiForm}
@@ -100,92 +100,22 @@ export const PaymentsPage = () => {
         >
         { ({ values,handleSubmit, handleChange, handleBlur, errors, touched }) => (
         <Form onSubmit={handleSubmit} autocomplete="off">
-          <Grid container className='payments-credit' alignItems="center">
+          <Grid container className='payments-oxxo' direction="row" alignItems="center">
             <Grid container spacing={2} textAlign='center' sx={{padding:6}}>
               <Grid xs={ 12 } md={12} lg={12} className='title-componente'> 
                 <p>METODO DE PAGO</p>
               </Grid>
             </Grid>
-            <Grid container justifyContent='center' alignItems='center'>
-              <Grid item xs={ 10 } md={10} lg={6} className='img-card'>
-              <img src={imgMaster} alt="Credit" className='master-card'/>
-              <img src={imgCard} alt="Credit"/>
-              <Grid className='text-name'>
-                <p>{nameValue}</p>
-              </Grid>
-              <Grid className='text-numero'>
-                <p>{numeroValue.match(/.{1,4}/g)?.join(' ')}</p>
-              </Grid>
-              <Grid className='text-year'>
-                <p>{mesValue}/{yearValue}</p>
-              </Grid>
-              </Grid> 
-              
-            </Grid>
-           
-            <Grid container justifyContent='center' alignItems='center' sx={{paddingTop:5}}>
-              <Grid item xs={ 10 } md={10} lg={6}>
-                <MyTextInputInfo 
-                  placeholder='Número de tarjeta'
-                  name="number"
-                  type="text"
-                  onInput={handleInput}
-                  value={numeroValue}
-                  onChange={handleChangeNum}
-                inputProps={{ maxLength: 16, inputMode: 'numeric' }}
-                />
-              </Grid> 
-            </Grid>
-            <Grid container justifyContent='center' alignItems='center' sx={{paddingTop:2}}>
-              <Grid item xs={ 10 } md={10} lg={6}>
-                <MyTextInputInfo 
-                  placeholder='Nombre de la tarjeta'
-                  name="name"
-                  type="text"
-                  value={nameValue}
-        onChange={handleChangeName}
-                  onInput={handleInputChange}
-                />
-             </Grid> 
-           </Grid>
-           <Grid container justifyContent='center' sx={{paddingTop:2}}>
-              <Grid container 
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Grid item xs={ 3 } md={2} lg={2}>
-                    <TextFieldDate 
-                      placeholder='Mes'
-                      name="month"
-                      type="text"
-                      value={mesValue}
-                      onChange={handleChangeMes}
-                      onInput={handleInput}
-                inputProps={{ maxLength: 2, inputMode: 'numeric' }}
-                    />
+            <Grid container justifyContent='center'>
+                <Grid className='contenedor-button' textAlign='center'>
+                    <p>OXXO</p>
                 </Grid>
-                <Grid item xs={ 3 } md={2} lg={2}>
-                <TextFieldDate 
-                  placeholder='Año'
-                  name="year"
-                  type="text"
-                  value={yearValue}
-                  onChange={handleChangeYear}
-                  onInput={handleInput}
-                inputProps={{ maxLength: 2, inputMode: 'numeric' }}
-                /> 
-                </Grid>
-                <Grid item xs={ 3 } md={2} lg={2}>
-                  <TextFieldDate 
-                      placeholder='CVV'
-                      name="cvv"
-                      type="text"
-                      onInput={handleInput}
-                inputProps={{ maxLength: 3, inputMode: 'numeric' }}
-                    />
-                </Grid>
-              </Grid>
             </Grid>
+            <br />
+            <Grid container justifyContent='center'>
+                <p>*Te cobrarán $12 extras por cada deposito*</p>
+            </Grid>
+            
            
             <Grid container textAlign='center' sx={{mb: 1, padding:5}}  >
               <Grid item xs={12} sm={ 12 } md={12} lg={12}>
