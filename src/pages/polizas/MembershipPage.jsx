@@ -2,7 +2,7 @@ import { useState, useEffect  } from 'react';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import { Grid } from "@mui/material"
 import * as React from 'react';
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import Autocomplete from '@mui/material/Autocomplete';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -16,8 +16,10 @@ import { usePaymentStore, useForm } from '../../hooks';
 import Swal from 'sweetalert2';
 import {ProgressCircular} from "../../components/ProgressCircular"
 import {ToastComponent} from "../../components/ToastComponent"
-import { MyTextInput, TextFieldDate,MyTextInputInfo } from '../../components';
+import { MyTextInput, TextFieldDate,MyTextInputInfo, PaymentSteps } from '../../components';
 import {  membershiValidationSchema} from '../../validations/membershiValidations';
+import { infoPay } from "../../store/auth/payments";
+import Filters from '../../helpers/filter'
 
 import imgAdd from '../../assets/img/mutuus-1/iconos/add.png';
 import imgDelete from '../../assets/img/mutuus-1/iconos/delete.png';
@@ -28,19 +30,14 @@ const membershiForm = {
   membershi: '',
   type_pay:'',
 }
+
+let result = ''
 export const MembershiPage = () => {
+  const dispatch = useDispatch()
   const {products} = useSelector(state => state.police);
+  const {information} = useSelector(state => state.counter);
   const history = useNavigate();
   
-  const defaultProps = {
-    options: alturas,
-    getOptionLabel: (option) => option,
-  };
-
-  const defaultPropsPeso = {
-    options: pesos,
-    getOptionLabel: (option) => option,
-  };
   const [loading, setLoading] = useState(false);
   const [toastInfo, setToastInfo] = useState({
     open: false,
@@ -55,24 +52,36 @@ export const MembershiPage = () => {
     });
   };
 
-  const [selectedValue, setSelectedValue] = React.useState('a');
-
+  const [selectedValue, setSelectedValue] = useState('$0.00');
   const handleChangeRadio = (event) => {
-    console.log(event.target.value);
-    setSelectedValue(event.target.value);
+    // '70d45cdb-9c72-4256-8f24-4da43529a0c2'
+    // let result = ''
+    // products.data.product.map(item=>{
+    //   result = item.product_configs.find(element => element.id === event.target.value)
+    // });
+    // console.log(result);
+    let pago = Filters.formatNumber(event.target.value)
+    let sumaPago = Filters.formatCurrency(pago + information.information.person_info.imc.extra);
+    setSelectedValue(sumaPago);
   };
+  
   const handleSubmit = (values) => {
+    setLoading(true);
     console.log(values);
-    
+    dispatch(infoPay(values))
+    setTimeout(() => {
+      setLoading(false);
+      history('/payments');
+    }, 4000);
  
 }
   return (
     <PolizasLayout title="Por favor ingresa la siguiente información">
-        <Grid container spacing={2} textAlign='center' sx={{padding:5}}>
-          <Grid xs={ 10 } md={10} lg={12}> 
-          <p>ELECCIÓN DE MEMBRESÍA</p>
-          </Grid>
+       <ProgressCircular open={loading} />
+        <Grid container justifyContent='center' marginTop={2}>
+        <PaymentSteps step={2}></PaymentSteps>
         </Grid>
+       <br />
         <Formik
           initialValues={membershiForm}
           onSubmit={handleSubmit}
@@ -81,6 +90,11 @@ export const MembershiPage = () => {
         { ({ values,handleSubmit, handleChange, handleBlur, errors, touched }) => (
         <Form onSubmit={handleSubmit} autocomplete="off">
           <Grid container className='membership-user' direction="row" alignItems="center">
+             <Grid container spacing={2} textAlign='center' sx={{padding:5}}>
+          <Grid xs={ 12 } md={12} lg={12} className='title-componente'> 
+          <p>ELECCIÓN DE MEMBRESÍA</p>
+          </Grid>
+        </Grid>
           <Grid container justifyContent='center' alignItems='center' className='info-err'>
             <Grid item xs={ 10 } md={10} lg={2}>
             <label>Clave del Agente:</label>
@@ -118,38 +132,36 @@ export const MembershiPage = () => {
           </Grid>
         </Grid>
         <Grid container justifyContent='center' spacing={2}  sx={{paddingTop:2}}>
-          <Grid item xs={ 10 } md={10} lg={6}>
+          <Grid item xs={ 10 } md={10} lg={6} >
             <label>Membresía:</label>
             {products.data.product.map((element, index) => (
               <Grid  container
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
-                className='radius-sel info-err'
+                className='radius-sel'
               >
                 <label htmlFor="">{element.description}</label>
-                <RadioGroup
-                  name="membershi"
-                  value={values.membershi}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                >
                   <FormControlLabel
-                    value={element.id}
-                    control={<Radio sx={{
+                    sx={{height:19}}
+                     name="membershi"
+                     value={values.membershi}
+                     onChange={handleChange}
+                     onBlur={handleBlur}
+                    control={<Radio
+                      value={element.id}
+                       sx={{
                       color: '#4F4F4F1A',
                       '&.Mui-checked': {
                         color: '#999999',
                       },
                     }}/>}
-                    labelPlacement="start"
                   />
-          
-                </RadioGroup>
-                <ErrorMessage name="membershi" component="span" />
               </Grid>
-              
             ))}
+            <Grid className='info-err'>
+            <ErrorMessage name="membershi" component="span" />
+            </Grid>
           </Grid>
         </Grid>
         <Grid container justifyContent='center' spacing={2}  sx={{paddingTop:2}}>
@@ -163,25 +175,31 @@ export const MembershiPage = () => {
                 alignItems="center"
               >
                 <label htmlFor="">{item.product_type}</label>
-                  <Radio
-                  checked={selectedValue === item.id}
-                  onChange={handleChangeRadio}
-                  // onChange={(e, value) => handleChange('type_pay')(value)}
-                  // onBlur={handleBlur('type_pay')}
-                    value={item.id}
-                    name='type_pay'
-                    inputProps={{ 'aria-label': 'A' }}
-                    sx={{
+                  <FormControlLabel
+                    sx={{height:19}}
+                     name="type_pay"
+                     value={values.type_pay}
+                     onChange={handleChange}
+                     onClick={handleChangeRadio}
+                     onBlur={handleBlur}
+                    control={<Radio
+                      checked={selectedValue === item.amount}
+                      value={item.amount}
+                       sx={{
                       color: '#4F4F4F1A',
                       '&.Mui-checked': {
                         color: '#999999',
                       },
-                    }}
+                    }}/>}
                   />
+                
               </Grid>
             ))
          
         ))}
+          <Grid className='info-err'>
+            <ErrorMessage name="type_pay" component="span" />
+            </Grid>
           </Grid>
         </Grid>
         <Grid container justifyContent='center' spacing={2}  sx={{paddingTop:2}}>
@@ -220,7 +238,7 @@ export const MembershiPage = () => {
         <Grid container  justifyContent='center' sx={{paddingTop:2}}  >
         <Grid item xs={ 5 } md={5} lg={3} className='info-pago'>
             <p className='textinfo'> Póliza 1M</p>
-            <p className='textTotal'> $114,500.00</p>
+            <p className='textTotal'> {selectedValue}</p>
           </Grid>
         </Grid>
         <Grid container textAlign='center' sx={{mb: 1, padding:5}}  >

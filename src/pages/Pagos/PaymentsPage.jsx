@@ -1,51 +1,186 @@
+import { useState, useEffect  } from 'react';
+import { Form, Formik, Field, ErrorMessage } from 'formik';
+import { Grid } from "@mui/material"
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import { Button, Grid } from "@mui/material"
+import { useSelector, useDispatch } from "react-redux"
+import Autocomplete from '@mui/material/Autocomplete';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import { PolizasLayout } from "../../layout/PolizasLayout"
+import { Link as RouLink, useNavigate} from "react-router-dom"
+import {PrimaryButton, SecundaryButton} from "../../components/ButtonContent"
+import { usePaymentStore, useForm } from '../../hooks';
+import Swal from 'sweetalert2';
+import {ProgressCircular} from "../../components/ProgressCircular"
+import {ToastComponent} from "../../components/ToastComponent"
+import { MyTextInput, TextFieldDate,MyTextInputInfo, PaymentSteps } from '../../components';
+import {  creditValidationSchema} from '../../validations/creditValidations';
+import { infoPay } from "../../store/auth/payments";
+import Filters from '../../helpers/filter'
 
 
+import imgCard from '../../assets/img/mutuus-1/card.png';
+import imgMaster from '../../assets/img/mutuus-1/master.png';
 
+const membershiForm = {
+  number:'',
+  cvv:'',
+  name: '',
+  month:'',
+  year:'',
+}
+
+let result = ''
 export const PaymentsPage = () => {
-
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleInput = (e) => {
+    e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo caracteres numéricos
   };
-    
-  return (
-    <PolizasLayout title="Método de pago.">
-      <Grid container  spacing={1}>
-        <Grid  item xs={ 12 } md={12} lg={12}>
-        <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-      <Tabs value={value} onChange={handleChange} centered>
-        <Tab label="Item One" />
-        <Tab label="Item Two" />
-        <Tab label="Item Three" />
-      </Tabs>
-    </Box>
-        </Grid>
-     
+  const handleInputChange  = (e) => {
+    e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, ''); // Permite solo letras
+  };
+  const dispatch = useDispatch()
+  const {products} = useSelector(state => state.police);
+  const {information} = useSelector(state => state.counter);
+  const history = useNavigate();
+  
+  const [loading, setLoading] = useState(false);
+  const [toastInfo, setToastInfo] = useState({
+    open: false,
+    message: '',
+    severity: '',
+    duration: 3000,
+  });
+  const handleCloseToast = () => {
+    setToastInfo({
+      ...toastInfo,
+      open: false,
+    });
+  };
 
-      </Grid>
-      <Grid container sx={{ mt: 10 }} >
-        <Grid item xs={ 12 } md={8} lg={8} textAlign='end'>
-            <p className="text-font-book">Monto a pagar: $14,500.00</p>
-            <p className="text-font-book">Póliza 1M         $12,000</p>
-            <p className="text-font-book">Menor adicional:  $2,000</p>
+  const [nameValue, setnameValue] = useState('');
+  const handleChangeName = (event) => {  
+    console.log('names: ',membershiForm.name);
+    setnameValue(event.target.value);
+  };
+  
+  const handleSubmit = (values) => {
+    setLoading(true);
+    console.log(values);
+    dispatch(infoPay(values))
+    setTimeout(() => {
+      setLoading(false);
+      history('/payments');
+    }, 4000);
+ 
+}
+  return (
+    <PolizasLayout title="Ingresa los datos de tu tarjeta de crédito o débito">
+       <ProgressCircular open={loading} />
+        <Grid container justifyContent='center' marginTop={2}>
+        <PaymentSteps step={3}></PaymentSteps>
         </Grid>
-        
-      </Grid>
-      <Grid container sx={{ mt: 1 }}>
-      <Grid item xs={ 12 } md={12} lg={12} textAlign='end'>
-          <Button sx={{fontFamily:'Gilam Regular' }}  variant='contained' >
-            Pagar
-          </Button>
-        </Grid>
-      </Grid> 
-            
+       <br />
+        <Formik
+          initialValues={membershiForm}
+          onSubmit={handleSubmit}
+          validationSchema={creditValidationSchema}
+        >
+        { ({ values,handleSubmit, handleChange, handleBlur, errors, touched }) => (
+        <Form onSubmit={handleSubmit} autocomplete="off">
+          <Grid container className='payments-credit' direction="row" alignItems="center">
+            <Grid container spacing={2} textAlign='center' sx={{padding:6}}>
+              <Grid xs={ 12 } md={12} lg={12} className='title-componente'> 
+                <p>METODO DE PAGO</p>
+              </Grid>
+            </Grid>
+            <Grid container justifyContent='center' alignItems='center'>
+              <Grid item xs={ 10 } md={10} lg={6} className='img-card'>
+              <img src={imgMaster} alt="Credit" className='master-card'/>
+              <img src={imgCard} alt="Credit"/>
+              <Grid className='text-name'>
+                <p>{nameValue}</p>
+              </Grid>
+              <Grid className='text-numero'>
+                <p>4444 1020 1452 2563</p>
+              </Grid>
+              <Grid className='text-year bottom-center'>
+                <p>11/26</p>
+              </Grid>
+              </Grid> 
+              
+            </Grid>
+           
+            <Grid container justifyContent='center' alignItems='center' sx={{paddingTop:5}}>
+              <Grid item xs={ 10 } md={10} lg={6}>
+                <MyTextInputInfo 
+                  placeholder='Número de tarjeta'
+                  name="number"
+                  type="text"
+                  onInput={handleInput}
+                inputProps={{ maxLength: 16, inputMode: 'numeric' }}
+                />
+              </Grid> 
+            </Grid>
+            <Grid container justifyContent='center' alignItems='center' sx={{paddingTop:2}}>
+              <Grid item xs={ 10 } md={10} lg={6}>
+                <MyTextInputInfo 
+                  placeholder='Nombre de la tarjeta'
+                  name="name"
+                  type="text"
+                  onChange={handleChangeName}
+                  onInput={handleInputChange}
+                />
+             </Grid> 
+           </Grid>
+           <Grid container justifyContent='center' sx={{paddingTop:2}}>
+              <Grid container 
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Grid item xs={ 3 } md={2} lg={2}>
+                    <TextFieldDate 
+                      placeholder='Mes'
+                      name="month"
+                      type="text"
+                      onInput={handleInput}
+                inputProps={{ maxLength: 2, inputMode: 'numeric' }}
+                    />
+                </Grid>
+                <Grid item xs={ 3 } md={2} lg={2}>
+                <TextFieldDate 
+                  placeholder='Año'
+                  name="year"
+                  type="text"
+                  onInput={handleInput}
+                inputProps={{ maxLength: 2, inputMode: 'numeric' }}
+                /> 
+                </Grid>
+                <Grid item xs={ 3 } md={2} lg={2}>
+                  <TextFieldDate 
+                      placeholder='CVV'
+                      name="cvv"
+                      type="text"
+                      onInput={handleInput}
+                inputProps={{ maxLength: 3, inputMode: 'numeric' }}
+                    />
+                </Grid>
+              </Grid>
+            </Grid>
+           
+            <Grid container textAlign='center' sx={{mb: 1, padding:5}}  >
+              <Grid item xs={12} sm={ 12 } md={12} lg={12}>
+                <SecundaryButton  type='submit' variant='contained' >
+                 Continuar
+                </SecundaryButton>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Form>
+      )}
+    </Formik>          
     </PolizasLayout>
   )
 }

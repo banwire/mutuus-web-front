@@ -194,7 +194,7 @@ export const TextFieldDate = ( { label, ...props }: Props ) => {
           <TextFieldInfoDat
             size="small"
             { ...field } { ...props } 
-            sx={{ input: { color: '#183B91', fontFamily:'Montserrat', fontSize:10} }}
+            sx={{ input: { color: '#183B91', fontFamily:'Montserrat', fontSize:10,} }}
             InputLabelProps={{style:{color: '#183B91', fontFamily:'Montserrat'}}}
             fullWidth
           />

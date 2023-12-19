@@ -6,6 +6,7 @@ export const paymentSlice = createSlice ({
         status: 'checking',
         products:{},
         listAgente:{},
+        pagosInfo:{},
         errorMessage: undefined
     },
     reducers:{
@@ -24,6 +25,11 @@ export const paymentSlice = createSlice ({
             state.listAgente= payload,
             state.errorMessage= undefined
         },
+        infoPay:(state, {payload}) =>{
+            state.status ='Pagos',
+            state.pagosInfo= payload,
+            state.errorMessage= undefined
+        },
 
         ErrInfo:(state, {payload}) =>{
            state.status ='ErrlistProduct',
@@ -34,4 +40,4 @@ export const paymentSlice = createSlice ({
     }
 })
 
-export const {ErrInfo, checkingCredentials, infoProduc, infoAgente} = paymentSlice.actions;
+export const {ErrInfo, checkingCredentials, infoProduc, infoAgente, infoPay} = paymentSlice.actions;

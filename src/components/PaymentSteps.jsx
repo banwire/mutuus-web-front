@@ -1,17 +1,12 @@
 import React from 'react';
-import { Divider, Grid, IconButton, Typography } from '@mui/material';
+import { Grid, IconButton, Typography } from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import { grey } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
-const stepData = [
-  { icon: 'file-document-edit', text: 'Informacion' },
-  { icon: 'credit-card-multiple', text: 'Metodo de pago' },
-  { icon: 'cash', text: 'Pago' },
-];
 
-const PaymentSteps = ({ step }) => {
+export const PaymentSteps = ({ step }) => {
   const history = useNavigate();
   return (
     <Grid container xs={10} sm={10} md={10} lg={10} xl={10} justifyContent="center" alignSelf={'center'} flexDirection={'row'} style={{ marginTop: '10px' }}>
@@ -19,7 +14,7 @@ const PaymentSteps = ({ step }) => {
       <IconButton aria-label="delete" onClick={() => {
    history('/information');
   }}>
-      <AssignmentIcon sx={{ width: '4rem', height: '4rem' }} color={step >= 1 ? 'secondary': 'disable'} />
+      <AssignmentIcon sx={{ width: '4rem', height: '4rem' }} color={step >= 1 ? 'secondary': 'disabled'} />
       </IconButton>
         
         <Typography variant="body2" color={step >= 1 ? 'secondary': grey[500]}  style={{ fontSize: '1.5rem' }}>Informacion</Typography>
@@ -29,7 +24,7 @@ const PaymentSteps = ({ step }) => {
       <IconButton aria-label="delete" onClick={() => {
    history('/membershi');
   }}>
-<AccountBalanceWalletIcon sx={{ width: '4rem', height: '4rem' }} color={step >= 2 ? 'secondary': 'disable'} />
+<AccountBalanceWalletIcon sx={{ width: '4rem', height: '4rem' }} color={step >= 2 ? 'secondary': 'disabled'} />
   </IconButton>
         
         <Typography variant="body2" color={step >= 2 ? 'secondary': grey[500]} style={{ fontSize: '1.5rem' }}>Metodo de pago</Typography>
@@ -47,5 +42,3 @@ const PaymentSteps = ({ step }) => {
     </Grid>
   );
 };
-
-export default PaymentSteps;

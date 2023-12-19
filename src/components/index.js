@@ -5,3 +5,4 @@ export * from './ButtonContent';
 export * from './SideBarRegister';
 export * from './textInput';
 export * from './ToastComponent';
+export * from './PaymentSteps'

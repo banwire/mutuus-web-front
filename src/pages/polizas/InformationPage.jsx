@@ -10,8 +10,9 @@ import { useAuthStore, useForm } from '../../hooks';
 import Swal from 'sweetalert2';
 import {ProgressCircular} from "../../components/ProgressCircular"
 import {ToastComponent} from "../../components/ToastComponent"
-import { MyTextInput, TextFieldDate,MyTextInputInfo } from '../../components';
+import { MyTextInput, TextFieldDate, MyTextInputInfo, PaymentSteps } from '../../components';
 import {  informationValidationSchema} from '../../validations/informationsValidations';
+// import {PaymentSteps} from '../../components/PaymentSteps'
 
 const InformationsForm = {
     height_id:'',
@@ -115,6 +116,9 @@ export const InformationPage = () => {
 
   return (
     <PolizasLayout title="Por favor ingresa la siguiente información">
+         <Grid container justifyContent='center' marginTop={2}>
+        <PaymentSteps step={1}></PaymentSteps>
+        </Grid>
          <ProgressCircular open={loading} />
       <ToastComponent {...toastInfo} handleClose={handleCloseToast} />
       <Grid container className='information-user' justifyContent='center'>

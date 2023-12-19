@@ -10,8 +10,8 @@ export const membershiValidationSchema = yup.object().shape({
     membershi: yup
     .string()
     .required('Membresía requerido'),
-    // type_pay: yup
-    // .string()
-    // .required('Tipo de pago es requerido'),
+    type_pay: yup
+    .string()
+    .required('Tipo de pago es requerido'),
        
 })

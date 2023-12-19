@@ -1,0 +1,74 @@
+.payments-credit{
+    font-family: $regular-m;
+    font-size: 12px;
+    color: black;
+    font-weight: 550;
+    line-height: 18px;
+
+    .title-componente{
+        font-size: 20px;
+        color: #11142D;
+        font-weight: 700;
+        line-height: 15px;
+    }
+    .img-card{
+        position: relative;
+        display: inline-block;
+    }
+    .background-image {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+    .master-card{
+        position: absolute;
+        top: 13%; /* Ajusta la posición verticalmente */
+        left: 9%; /* Ajusta la posición horizontalmente */
+        transform: translate(-50%, -50%); /* Centra la imagen superpuesta */
+    }
+    .text-name {
+        position: absolute;
+        top: 222px; /* Ajusta la posición verticalmente */
+        left: 10px; /* Ajusta la posición horizontalmente */
+        color: #FFFFFF; /* Color del texto */
+        font-size:  135%; /* Tamaño de la fuente */
+        font-weight: 400; /* Peso de la fuente */
+        padding: 5px 10px; /* Espaciado interno */
+        line-height: 22px;
+      }
+      .text-numero {
+        position: absolute;
+        top: 190px; /* Ajusta la posición verticalmente */
+        left: 10px; /* Ajusta la posición horizontalmente */
+        color: #FFFFFF; /* Color del texto */
+        font-size: 250%; /* Tamaño de la fuente */
+        font-weight: 400; /* Peso de la fuente */
+        padding: 5px 10px; /* Espaciado interno */
+        // line-height: 35px;
+      }
+      .text-year {
+        position: absolute;
+        top: 222px; /* Ajusta la posición verticalmente */
+        left: 430px; /* Ajusta la posición horizontalmente */
+        color: #FFFFFF; /* Color del texto */
+        font-size: 135%; /* Tamaño de la fuente */
+        font-weight: 400; /* Peso de la fuente */
+        padding: 5px 10px; /* Espaciado interno */
+        line-height: 22px;
+      }
+
+    .linea-color{
+        width: 150px; /* Ancho de la línea */
+        height: 2px; /* Grosor de la línea */
+        background-color: #979797;
+        border: 1px;
+    }
+  
+    span {
+        font-family: $regular-m;
+        font-size: 9px;
+        color: red;
+    }
+  
+   
+}
