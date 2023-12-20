@@ -2,7 +2,7 @@ import {Routes, Route} from "react-router-dom"
 import {AuthRoutes} from '../auth/routes/AuthRoutes';
 import {RegisterPage, CodePage, LoginPage, PasswordPage} from '../pages/register';
 import {InformationPage, TerminosPage, MembershiPage} from '../pages/polizas';
-import {PaymentsPage, PaymentsOxxo} from '../pages/Pagos';
+import {PaymentsPage, PaymentsOxxo, PaymentsStore, Notifications} from '../pages/Pagos';
 import { useAuthStore } from '../hooks';
 import { ProgressCircular } from '../components/ProgressCircular';
 
@@ -23,6 +23,8 @@ export const AppRouter = () => {
       <Route path="/membershi" element={<MembershiPage/>}/>
       <Route path="/payments" element={<PaymentsPage/>}/>
       <Route path="/payments-oxxo" element={<PaymentsOxxo/>}/>
+      <Route path="/payments-store" element={<PaymentsStore/>}/>
+      <Route path="/notification-pay" element={<Notifications/>}/>
         {/* Login y Registro*/}
         <Route path="/auth/*" element={<AuthRoutes/>}/>
     </Routes> 

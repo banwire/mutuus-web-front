@@ -3,12 +3,6 @@ import { Form, Formik, Field, ErrorMessage } from 'formik';
 import { Grid } from "@mui/material"
 import * as React from 'react';
 import { useSelector, useDispatch } from "react-redux"
-import Autocomplete from '@mui/material/Autocomplete';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import { PolizasLayout } from "../../layout/PolizasLayout"
 import { Link as RouLink, useNavigate} from "react-router-dom"
 import {PrimaryButton, SecundaryButton} from "../../components/ButtonContent"
@@ -16,7 +10,7 @@ import { usePaymentStore, useForm } from '../../hooks';
 import Swal from 'sweetalert2';
 import {ProgressCircular} from "../../components/ProgressCircular"
 import {ToastComponent} from "../../components/ToastComponent"
-import { MyTextInput, TextFieldDate,MyTextInputInfo, PaymentSteps } from '../../components';
+import { MyTextInput, TextFieldDate,MyTextInputInfo, ListComponent } from '../../components';
 import {  creditValidationSchema} from '../../validations/creditValidations';
 import { infoPay } from "../../store/auth/payments";
 import Filters from '../../helpers/filter'
@@ -31,7 +25,13 @@ const membershiForm = {
   name: '',
   month:'',
   year:'',
+  address:''
 }
+
+const links = [
+  { to: '/payments-oxxo', text: 'Pagar en OXXO' },
+  { to: '/payments-store', text: 'Pagar en tiendas de conveniencia' },
+];
 
 let result = ''
 export const PaymentsPage = () => {
@@ -42,8 +42,6 @@ export const PaymentsPage = () => {
     e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, ''); // Permite solo letras
   };
   const dispatch = useDispatch()
-  const {products} = useSelector(state => state.police);
-  const {information} = useSelector(state => state.counter);
   const history = useNavigate();
   
   const [loading, setLoading] = useState(false);
@@ -66,7 +64,7 @@ export const PaymentsPage = () => {
     // dispatch(infoPay(values))
     setTimeout(() => {
       setLoading(false);
-      history('/payments-oxxo');
+      history('/notification-pay');
     }, 4000);
  
 }
@@ -88,19 +86,18 @@ export const PaymentsPage = () => {
             </Grid>
             <Grid container justifyContent='center' alignItems='center'>
               <Grid item xs={ 10 } md={10} lg={6} className='img-card'>
-              <img src={imgMaster} alt="Credit" className='master-card'/>
-              <img src={imgCard} alt="Credit"/>
-              <Grid >
-                <p>{values.name}</p>
-              </Grid>
-              <Grid >
-                <p>{values.number.match(/.{1,4}/g)?.join(' ')}</p>
-              </Grid>
-              <Grid >
-                <p>{values.year}/{values.month}</p>
-              </Grid>
+                <img src={imgMaster} alt="Credit" className='master-card'/>
+                <img src={imgCard} alt="Credit"/>
+                <Grid className='text-name'>
+                  <p>{values.name}</p>
+                </Grid>
+                <Grid className='text-numero'>
+                  <p>{values.number.match(/.{1,4}/g)?.join(' ')}</p>
+                </Grid>
+                <Grid className='text-year'>
+                  <p>{ values.month}/{values.year}</p>
+                </Grid>
               </Grid> 
-              
             </Grid>
            
             <Grid container justifyContent='center' alignItems='center' sx={{paddingTop:5}}>
@@ -109,10 +106,9 @@ export const PaymentsPage = () => {
                   placeholder='Número de tarjeta'
                   name="number"
                   type="text"
-                  onInput={handleChange('number')}
+                  onInput={handleInput}
                   value={values.number}
-                 
-                inputProps={{ maxLength: 16, inputMode: 'numeric' }}
+                  inputProps={{ maxLength: 16, inputMode: 'numeric' }}
                 />
               </Grid> 
             </Grid>
@@ -123,7 +119,6 @@ export const PaymentsPage = () => {
                   name="name"
                   type="text"
                   value={values.name}
-    
                   onInput={handleInputChange}
                 />
              </Grid> 
@@ -167,14 +162,34 @@ export const PaymentsPage = () => {
                 </Grid>
               </Grid>
             </Grid>
+             
+            <Grid container justifyContent='center' alignItems='center' sx={{paddingTop:2}}>
+              <Grid item xs={ 10 } md={10} lg={6}>
+                <MyTextInputInfo 
+                  placeholder='Dirección'
+                  name="address"
+                  type="text"
+                  onInput={handleInputChange}
+                  value={values.address}
+                  inputProps={{ maxLength: 16, inputMode: 'numeric' }}
+                />
+              </Grid> 
+            </Grid>
            
-            <Grid container textAlign='center' sx={{mb: 1, padding:5}}  >
+            <Grid container textAlign='center' sx={{mb: 1, padding:4}}  >
               <Grid item xs={12} sm={ 12 } md={12} lg={12}>
                 <SecundaryButton  type='submit' variant='contained' >
                  Continuar
                 </SecundaryButton>
               </Grid>
             </Grid>
+       
+              <Grid container 
+                  justifyContent="center"
+                  item xs={12} sm={ 12 } md={12} lg={12} sx={{paddingBottom:2}}>
+                  <ListComponent links={links} />
+              </Grid>
+       
           </Grid>
         </Form>
       )}

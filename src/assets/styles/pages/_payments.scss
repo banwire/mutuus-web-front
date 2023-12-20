@@ -15,11 +15,6 @@
         position: relative;
         display: inline-block;
     }
-    .background-image {
-        width: 100%;
-        height: auto;
-        display: block;
-      }
     .master-card{
         position: absolute;
         top: 13%; /* Ajusta la posición verticalmente */
@@ -28,28 +23,28 @@
     }
     .text-name {
         position: absolute;
-        top: 222px; /* Ajusta la posición verticalmente */
+        top: 160px; /* Ajusta la posición verticalmente */
         left: 10px; /* Ajusta la posición horizontalmente */
         color: #FFFFFF; /* Color del texto */
-        font-size:  135%; /* Tamaño de la fuente */
+        font-size:  130%; /* Tamaño de la fuente */
         font-weight: 400; /* Peso de la fuente */
         padding: 5px 10px; /* Espaciado interno */
         line-height: 22px;
       }
       .text-numero {
         position: absolute;
-        top: 190px; /* Ajusta la posición verticalmente */
+        top: 130px; /* Ajusta la posición verticalmente */
         left: 10px; /* Ajusta la posición horizontalmente */
         color: #FFFFFF; /* Color del texto */
-        font-size: 250%; /* Tamaño de la fuente */
+        font-size: 200%; /* Tamaño de la fuente */
         font-weight: 400; /* Peso de la fuente */
         padding: 5px 10px; /* Espaciado interno */
         // line-height: 35px;
       }
       .text-year {
         position: absolute;
-        top: 222px; /* Ajusta la posición verticalmente */
-        left: 430px; /* Ajusta la posición horizontalmente */
+        top: 160px; /* Ajusta la posición verticalmente */
+        left: 310px; /* Ajusta la posición horizontalmente */
         color: #FFFFFF; /* Color del texto */
         font-size: 135%; /* Tamaño de la fuente */
         font-weight: 400; /* Peso de la fuente */

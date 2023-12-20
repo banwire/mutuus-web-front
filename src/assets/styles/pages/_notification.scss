@@ -1,0 +1,31 @@
+.payments-notification{
+    font-family: $regular-m;
+    font-size: 12px;
+    color: black;
+    font-weight: 550;
+    line-height: 18px;
+
+    .title-componente{
+        font-size: 20px;
+        color: #11142D;
+        font-weight: 700;
+        line-height: 15px;
+    }
+    
+    .contenedor-code{
+        // width: 150px;
+        background-color: #F9F9F9;
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .lin-oxxo {
+        width: 609px; /* Ancho de la línea */
+        height: 1px; /* Grosor de la línea */
+        background-color: #CCCCCC;
+        border: 1px;
+    }
+   
+  
+   
+}

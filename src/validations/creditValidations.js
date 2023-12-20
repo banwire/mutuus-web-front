@@ -15,5 +15,8 @@ export const creditValidationSchema = yup.object().shape({
         .required('Año requerido'),
     cvv: yup
         .string()
-        .required('CVV requerido')
+        .required('CVV requerido'),
+    address: yup
+        .string()
+        .required('Dirección requerido'),
 })

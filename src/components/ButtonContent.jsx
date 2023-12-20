@@ -102,16 +102,67 @@ export const LoginButton = styled(Button)({
     },
   });
 
-  export const PagosButton = styled(Button)({
+  export const OxxoTiendasPagoButton = styled(Button)({
     textTransform: 'none',
     fontFamily: 'Montserrat',
     fontSize: 14,
     backgroundColor: '#9CD41C',
-    width:180,
-    height:100,
+    width:280,
     color: '#FFFFFF',
     lineHeight: 1.5,
-    borderRadius:18,
+    borderRadius:20,
+    '&:hover': {
+      backgroundColor: '#444343',
+      borderColor: '#0062cc',
+      boxShadow: 'none',
+      color:'#FFFFFF'
+    },
+    '&:active': {
+      boxShadow: 'none',
+      backgroundColor: '#0062cc',
+      borderColor: '#005cbf',
+    },
+    '&:focus': {
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+    },
+  });
+
+  export const PagosOxxoButton = styled(Button)({
+    textTransform: 'none',
+    fontFamily: 'Montserrat',
+    fontSize: 14,
+    backgroundColor: '#F2C53C',
+    width:200,
+    height:65,
+    color: '#FFFFFF',
+    lineHeight: 1.5,
+    borderRadius:50,
+    '&:hover': {
+      backgroundColor: '#444343',
+      borderColor: '#0062cc',
+      boxShadow: 'none',
+      color:'#FFFFFF'
+    },
+    '&:active': {
+      boxShadow: 'none',
+      backgroundColor: '#0062cc',
+      borderColor: '#005cbf',
+    },
+    '&:focus': {
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+    },
+  });
+
+  export const PagosStoreButtonExport = styled(Button)({
+    textTransform: 'none',
+    fontFamily: 'Montserrat',
+    fontSize: 14,
+    backgroundColor: '#183B91',
+    width:200,
+    height:65,
+    color: '#FFFFFF',
+    lineHeight: 1.5,
+    borderRadius:50,
     '&:hover': {
       backgroundColor: '#444343',
       borderColor: '#0062cc',

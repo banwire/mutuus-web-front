@@ -1,6 +1,12 @@
 import { useState, useEffect  } from 'react';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 import { Grid } from "@mui/material"
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
 import * as React from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import Autocomplete from '@mui/material/Autocomplete';
@@ -37,6 +43,15 @@ export const MembershiPage = () => {
   const {products} = useSelector(state => state.police);
   const {information} = useSelector(state => state.counter);
   const history = useNavigate();
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   
   const [loading, setLoading] = useState(false);
   const [toastInfo, setToastInfo] = useState({
@@ -206,8 +221,8 @@ export const MembershiPage = () => {
         </Grid>
         <Grid  container  direction="row"
                 justifyContent="space-evenly"
-                alignItems="center" sx={{paddingTop:2}}>
-            <img src={imgAdd} alt="MutuusCruz" />
+                alignItems="center" sx={{paddingTop:2, cursor:'pointer'}}>
+            <img src={imgAdd} alt="MutuusCruz" onClick={handleClickOpen}/>
             <img src={imgDelete} alt="MutuusCruz"/>
         </Grid>
         <br />
@@ -215,14 +230,14 @@ export const MembershiPage = () => {
           <Grid container 
             justifyContent="space-evenly"
             sx={{paddingTop:1, paddingBottom:1}}  className='info-cuadro'>
-              <Grid item xs={ 6 } md={6} lg={3}>
+              <Grid item xs={ 6 } md={6} lg={4}>
                 <p >Parentesco: </p>
                 <p >Nombre: </p>
                 <p >Estatura: </p>
                 <p >Peso: </p>
                 <p >Curp: </p>
               </Grid>
-              <Grid item xs={ 6 } md={6} lg={3}>
+              <Grid item xs={ 6 } md={6} lg={4}>
                 <p > Hijo</p>
                 <p > Luis Hernandez</p>
                 <p >1.85 </p>
@@ -250,7 +265,39 @@ export const MembershiPage = () => {
          
         </Form>
       )}
-    </Formik>          
+    </Formik>  
+
+   <React.Fragment>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Subscribe</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To subscribe to this website, please enter your email address here. We
+            will send updates occasionally.
+          </DialogContentText>
+          <Grid container justifyContent='center' alignItems='center' className='info-err'>
+            <Grid item xs={ 10 } md={10} lg={2}>
+            <label>Clave del Agente:</label>
+          </Grid> 
+          <Grid item xs={ 10 } md={10} lg={4}>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+          </Grid> 
+        </Grid>
+        </DialogContent>
+        <DialogActions>
+          <SecundaryButton onClick={handleClose}>Cancel</SecundaryButton>
+          <SecundaryButton onClick={handleClose}>Subscribe</SecundaryButton>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>       
     </PolizasLayout>
   )
 }
