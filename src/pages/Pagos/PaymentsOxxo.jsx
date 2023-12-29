@@ -57,13 +57,13 @@ export const PaymentsOxxo = () => {
             </Grid>
             <Grid container justifyContent='center' sx={{paddingTop: 2}}>
                 <Grid item xs={ 10 } md={10} lg={5.3} className='contenedor-code' textAlign='center'>
-                   <Grid container direction="row"
+                   <Grid container
                         justifyContent="space-around"
                         >
                         <label htmlFor="">Monto: </label>
                         <label htmlFor="">Referencia: </label>
                    </Grid>
-                   <Grid container direction="row"
+                   <Grid container
                         justifyContent="space-around"
                         >
                         <p> $3,000.00</p>

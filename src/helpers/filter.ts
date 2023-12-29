@@ -50,6 +50,13 @@ class Filters {
     return Number(currency.replace(/[^0-9.-]+/g, ''))
   }
 
+  handleInputNum = (e) => {
+    e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo caracteres numéricos
+  };
+  handleInputLetra  = (e) => {
+    e.target.value = e.target.value.replace(/[^A-Za-z]/g, ''); // Permite solo letras
+  };
+
 }
 
 export default new Filters()

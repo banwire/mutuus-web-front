@@ -13,11 +13,40 @@
     }
     
     .contenedor-code{
-        // width: 150px;
         background-color: #F9F9F9;
         padding: 15px;
         border-radius: 15px;
     }
+
+    .contenedor-info{
+        background-color: #FFFFFF;
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .title-mem {
+        color: #181725;
+       line-height: 18px;
+       font-weight: 700;
+        font-size: 15px;  
+    }
+
+    .descuento{
+        color: #F60000;
+        font-family: $bold;
+        font-size: 14px;
+    }
+    .subtotal{
+        color: #0684E0;
+        font-family: $bold;
+        font-size: 14px;
+    }
+    .total{
+        color: #9CD41C;
+        font-family: $bold;
+        font-size: 14px;
+    }
+
 
     .lin-oxxo {
         width: 609px; /* Ancho de la línea */

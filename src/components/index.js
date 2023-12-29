@@ -5,5 +5,7 @@ export * from './ButtonContent';
 export * from './SideBarRegister';
 export * from './textInput';
 export * from './ToastComponent';
-export * from './PaymentSteps'
-export * from './ListComponent'
+export * from './PaymentSteps';
+export * from './ListComponent';
+export * from './TextField';
+export * from './Select';
