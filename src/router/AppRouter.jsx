@@ -3,7 +3,7 @@ import {AuthRoutes} from '../auth/routes/AuthRoutes';
 import {RegisterPage, CodePage, LoginPage, PasswordPage} from '../pages/register';
 import {InformationPage, TerminosPage, MembershiPage} from '../pages/polizas';
 import {PaymentsPage, PaymentsOxxo, PaymentsStore, Notifications} from '../pages/Pagos';
-import {SectionsPage, PersonPage} from '../pages/Planes';
+import {SectionsPage, PersonPage, AntiquityPage} from '../pages/Planes';
 import { useAuthStore } from '../hooks';
 import { ProgressCircular } from '../components/ProgressCircular';
 
@@ -28,6 +28,7 @@ export const AppRouter = () => {
       <Route path="/notification-pay" element={<Notifications/>}/>
       <Route path="/sections" element={<SectionsPage/>}/>
       <Route path="/datos-personales" element={<PersonPage/>}/>
+      <Route path="/antiquity" element={<AntiquityPage/>}/>
         {/* Login y Registro*/}
         <Route path="/auth/*" element={<AuthRoutes/>}/>
     </Routes> 

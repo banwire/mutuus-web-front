@@ -1,5 +1,7 @@
 import { useState, useEffect  } from 'react';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
+import FormControl from '@mui/material/FormControl';
+import Radio from '@mui/material/Radio';
 import { useSelector } from "react-redux"
 import { Grid } from "@mui/material"
 import { PlanesLayout } from "../../layout/PlanesLayout"
@@ -32,11 +34,38 @@ const InformationsForm = {
     calle:''
   }
  
-export const PersonPage = () => {
+export const AntiquityPage = () => {
   const history = useNavigate();
   const {registrationInfo} = useAuthStore();
   const { altura, peso, information} = useSelector((state) => state.counter);
 
+  const handleInput = (e) => {
+    e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Permite solo caracteres numéricos
+  };
+  const handleInputChange  = (e) => {
+    e.target.value = e.target.value.replace(/[^A-Za-z]/g, ''); // Permite solo letras
+  };
+  let orderby = [];
+  let orderbyPeso = [];
+  useEffect(() => {
+    altura.altura.forEach(item =>{
+      orderby.push(item.value.toString())
+    })
+    peso.pesos.forEach(item =>{
+      orderbyPeso.push(item.value.toString())
+    })
+    console.log(information);
+  }, []);
+
+  const defaultProps = {
+    options: orderby,
+    getOptionLabel: (option) => option,
+  };
+
+  const defaultPropsPeso = {
+    options: orderbyPeso,
+    getOptionLabel: (option) => option,
+  };
   const [loading, setLoading] = useState(false);
   const [toastInfo, setToastInfo] = useState({
     open: false,
@@ -111,134 +140,74 @@ export const PersonPage = () => {
         >
         { ({ values,handleSubmit, handleChange, handleBlur, errors, touched }) => (
             <Form onSubmit={handleSubmit} autocomplete="off">
+                <Grid container justifyContent='center' textAlign='center'>
+                    <p>RECONOCIMIENTO DE ANTIGÜEDAD</p>
+                </Grid>
                 <Grid container spacing={1} className='information-user' sx={{padding:5}}>
-                    <Grid item xs={ 10 } md={10} lg={4}>
+                    <Grid item xs={ 10 } md={10} lg={8}>
+                        <label>Ha tenido cobertura medica durante los últimos 30 dias</label>
+                        <FormControl>
+                        <Radio
+                     
+                   
+                       sx={{
+                      color: '#4F4F4F1A',
+                      '&.Mui-checked': {
+                        color: '#999999',
+                      },
+                    }}/>
                         <CustomTextField 
-                            label='Nombre'
+                            name="first_name"
+                            value={values.first_name}
+                            type="text"
+                            onInput={Filters.handleInputLetra}
+                            />
+                        </FormControl>
+                      
+                             <CustomTextField 
                             name="first_name"
                             value={values.first_name}
                             type="text"
                             onInput={Filters.handleInputLetra}
                             />
                     </Grid> 
-                    <Grid item xs={ 10 } md={10} lg={4}>
-                        <CustomTextField 
-                            label='Apellido'
-                            value={values.last_name}
-                            name="last_name"
+
+                    <Grid container spacing={1} direction='row' justifyContent='space-evenly'>
+                    <CustomTextField 
+                            name="first_name"
+                            value={values.first_name}
                             type="text"
                             onInput={Filters.handleInputLetra}
                             />
-                    </Grid> 
-                    <Grid item xs={ 10 } md={10} lg={4}>
-                        <CustomTextField 
-                            label='Apellido'
-                            name="middle_name"
+                             <CustomTextField 
+                            name="first_name"
+                            value={values.first_name}
                             type="text"
                             onInput={Filters.handleInputLetra}
                             />
-                    </Grid>
-                    <Grid item xs={ 10 } md={10} lg={6}>
-                        <CustomTextField 
-                            label='Fecha de nacimiento'
-                            name="day"
-                            type="date"/>
-                    </Grid>    
-                    <Grid item xs={ 10 } md={10} lg={6}>
-                        <CustomTextField 
-                            label={'RFC'} name={'rfc'}/>
-                    </Grid> 
-                    <Grid item xs={ 10 } md={10} lg={4}>
-                        <CustomTextField 
-                            label='Celular'
-                            name="phone_number"
-                            type="number"
-                            onInput={Filters.handleInputNum}
-                            inputProps={{ maxLength: 10, inputMode: 'numeric' }}
-                            />
-                    </Grid> 
-                    <Grid item xs={ 10 } md={10} lg={4}>
-                        <CustomTextField 
-                            label='Email'
-                            name="email"
-                            type="text"
-                            
-                            />
-                    </Grid> 
-                    <Grid item xs={ 10 } md={10} lg={4}>
-                        <SelectField label={'Género'}
-                            name={'gender'}
-                            errors={errors}
-                            data={top100Films}
-                            isSearch/>
-                    </Grid>
-                    <Grid item xs={ 10 } md={10} lg={4}>
-                        <CustomTextField 
-                            label='Ocupación'
-                            name="ocupacion"
-                            type="text"
-                            onInput={Filters.handleInputLetra}
-                           
-                            />
-                    </Grid> 
-                    <Grid item xs={ 10 } md={10} lg={4}>
-                        <CustomTextField 
-                            label='Estado Civíl'
-                            name="estadoc"
-                            type="text"
-                            onInput={Filters.handleInputLetra}
-                           
-                            />
-                    </Grid> 
-                    <Grid item xs={ 10 } md={10} lg={4}>
-                        <CustomTextField 
-                            label='Nacionalidad'
-                            name="nacionalidad"
-                            type="text"
-                            onInput={Filters.handleInputLetra}
-                           
-                            />
-                    </Grid>
-                    <Grid item xs={ 10 } md={10} lg={4}>
-                        <CustomTextField 
-                            label='CP'
-                            name="cp"
-                            type="text"
-                            onInput={Filters.handleInputNum}
-                           
-                            />
-                    </Grid> 
-                    <Grid item xs={ 10 } md={10} lg={4}>
-                        <CustomTextField 
-                            label='Estado'
-                            name="estado"
-                            type="text"
-                            onInput={Filters.handleInputLetra}
-                            />
-                    </Grid> 
-                    <Grid item xs={ 10 } md={10} lg={4}>
-                        <CustomTextField 
-                            label='Mun/Del'
-                            name="muni"
+                             <CustomTextField 
+                            name="first_name"
+                            value={values.first_name}
                             type="text"
                             onInput={Filters.handleInputLetra}
                             />
                     </Grid>
-                    <Grid item xs={ 10 } md={10} lg={4}>
+
+                    <Grid item xs={ 10 } md={10} lg={8}>
+                        <label>¿Desde cuándo ha tenido la cobertura en forma ininterrumpida? (DD/MM/AAAA)</label>
                         <CustomTextField 
-                            label='Colonia'
-                            name="colonia"
+                            name="first_name"
+                            value={values.first_name}
+                            type="text"
+                            onInput={Filters.handleInputLetra}
+                            />
+                             <CustomTextField 
+                            name="first_name"
+                            value={values.first_name}
                             type="text"
                             onInput={Filters.handleInputLetra}
                             />
                     </Grid> 
-                    <Grid item xs={ 10 } md={10} lg={6}>
-                        <CustomTextField 
-                            label='Calle y número'
-                            name="calle"
-                            type="text"
-                            />
-                    </Grid>
                     <Grid container textAlign='center' sx={{mb: 1, padding:5}}  >
                         <Grid item xs={12} sm={ 12 } md={12} lg={12}  >
                             <SecundaryButton  type='submit' variant='contained' >
